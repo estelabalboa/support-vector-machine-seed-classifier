@@ -4,6 +4,7 @@ import pandas as pd
 from time import time
 from IPython.display import display
 import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier
 from jedi.refactoring import inline
 from matplotlib import *
 import scipy
@@ -50,20 +51,25 @@ class SeedClassifier():
 
         # Mostrar correlaciones como una función discreta entre las diferentes variables con una matriz
         # útil para apreciar relaciones lineales
-        pd.plotting.scatter_matrix(df, figsize=(40, 40), diagonal='kde')
-
         # Pista: explore pd.plotting.scatter_matrix
 
+        pd.plotting.scatter_matrix(df, figsize=(40, 40), diagonal='kde')
+
+
         # Crear un dataframe solo con la columna de la variable dependiente
+        # La variable dependiente será nuestra nueva columna Class
+        dep_val = df["Class"]
+        print(dep_val)
 
         # Crear un dataframe con las variables independientes
-
+        indep_val = df.drop(["Class"], axis=1)
+        print(indep_val)
 
         # Definir un RF con diferentes hiperparámetros vistos en lecciones anteriores (¡experimentar!)
-
+        randomForestModel = RandomForestClassifier(n_estimators=100, max_depth=9, random_state=42)
 
         # Entrenar un RF con la totalidad del dataset
-
+        randomForestModel.fit(indep_val,dep_val)
 
         ###### Snippet para imprimir resultados, df es la variable que refiere
         ###### al dataframe y clf al clasificador, cambiarlas si es necesario
