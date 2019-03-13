@@ -1,3 +1,5 @@
+from typing import List, Any, Tuple
+
 import matplotlib
 import numpy as np
 import pandas as pd
@@ -5,6 +7,7 @@ from time import time
 from IPython.display import display
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
 from jedi.refactoring import inline
 from matplotlib import *
 import scipy
@@ -74,26 +77,30 @@ class SeedClassifier():
         ###### Snippet para imprimir resultados, df es la variable que refiere
         ###### al dataframe y clf al clasificador, cambiarlas si es necesario
 
-        # feature_list = list(zip(df.columns.values, clf.feature_importances_))
+        feature_list: List[Tuple[Any, Any]] = list(zip(df.columns.values, randomForestModel.feature_importances_))
         # zip empareja los elementos de la lista
-        # sorted_by_importance = sorted(feature_list, key=lambda x: x[1], reverse=True)
+        sorted_by_importance = sorted(feature_list, key=lambda x: x[1], reverse=True)
 
-        # for feat, value in sorted_by_importance:
-        #    print(feat, value)
+        for feat, value in sorted_by_importance:
+            print(feat, value)
+
 
         # Crear un dataframe solo con la columna de la variable dependiente
+        dep_val = df["Class"]
 
         # Crear un dataframe con las variables independientes
-
+        indep_val = df.drop(["Class"], axis=1)
 
         # Partir el test en cierta proporción (¡experimentar!)
         # X_train, X_test, y_train, y_test = # ?
+        X_train, X_test, y_train, y_test = train_test_split(indep_val,dep_val, test_size=0.30, random_state=42)
+
 
         ###### Snippet para imprimir resultados, X_train es la variable que refiere
         ###### a la porcion de entrenamiento y X_test a la de test
 
-        # print("El dataset de training tiene {} elementos.".format(X_train.shape[0]))
-        # print("El dataset de testing tiene {} elementos.".format(X_test.shape[0]))
+        print("El dataset de training tiene {} elementos.".format(X_train.shape[0]))
+        print("El dataset de testing tiene {} elementos.".format(X_test.shape[0]))
 
         # Definir un clasificador, recordar que se está haciendo una clasificación ternaria
 
