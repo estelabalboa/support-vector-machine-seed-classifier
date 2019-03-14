@@ -1,22 +1,19 @@
 from typing import List, Any, Tuple
+from IPython.display import display
 
-import matplotlib
 import numpy as np
 import pandas as pd
-from time import time
-from IPython.display import display
 import matplotlib.pyplot as plt
+import os
+
 from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
-from jedi.refactoring import inline
-from matplotlib import *
-import scipy
 
-#%matplotlib inline
-import os
+
 os.chdir("/Users/ebalboa/Documents/AI-SATURDAYS/20190223/support-vector-machine-seed-classifier/")
+
 
 class SeedClassifier():
 
