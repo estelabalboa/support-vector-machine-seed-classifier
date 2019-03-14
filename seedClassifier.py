@@ -6,7 +6,9 @@ import pandas as pd
 from time import time
 from IPython.display import display
 import matplotlib.pyplot as plt
+from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
 from jedi.refactoring import inline
 from matplotlib import *
@@ -103,16 +105,22 @@ class SeedClassifier():
         print("El dataset de testing tiene {} elementos.".format(X_test.shape[0]))
 
         # Definir un clasificador, recordar que se está haciendo una clasificación ternaria
+        # Utilizaremos el algoritmo SVM - Support Vector Machine
+        my_classifier = svm.SVC(gamma="auto", kernel="poly")
 
 
         # Entrenar el clasificador con el dataset de train
-
+        my_classifier.fit(X_train, y_train)
 
         # Predecir valores para las variables independientes de test
-
+        predicted: object = my_classifier.predict(X_test)
 
         # Calcular la precisión
         # Pista: explorar sklearn.metrics.accuracy_score
+
+        accuracy_score(y_test,predicted)
+        print("Precisión global: " + str(accuracy_score(y_test, predicted)))
+        print("Report:\n" + classification_report(y_test, predicted))
 
 
 if __name__ == '__main__':
